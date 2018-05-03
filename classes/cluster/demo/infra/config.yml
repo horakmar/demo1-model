@@ -1,0 +1,95 @@
+classes:
+- service.git.client
+- system.linux.system.single
+- system.linux.system.repo.mcp.salt
+# Add docker repository
+- system.linux.system.repo.docker
+- system.salt.master.api
+- system.salt.master.pkg
+- system.openssh.client.lab
+- system.reclass.storage.salt
+- system.salt.minion.ca.salt_master
+#- system.sphinx.server.doc.reclass
+- system.docker.host
+- system.docker
+- system.docker.client.compose
+- system_extra.docker.client.compose.service.jenkins
+#
+- system.jenkins.master.config
+- service.jenkins.support
+- service.jenkins.client
+- system.jenkins.client.approved_scripts
+- system.jenkins.client.credential.gerrit
+- system_extra.jenkins.client.job.template
+- system_extra.jenkins.client.job.inline
+#
+- cluster.demo
+parameters:
+  _param:
+    reclass_data_repository: https://github.com/chnyda/ovn3
+    reclass_data_revision: master
+    salt_master_environment_repository: "https://github.com/tcpcloud"
+    salt_master_environment_revision: master
+    salt_api_password_hash: "$6$sGnRlxGf$al5jMCetLP.vfI/fTl3Z0N7Za1aeiexL487jAtyRABVfT3NlwZxQGVhO7S1N8OwS/34VHYwZQA8lkXwKMN/GS1"
+    reclass_config_master: 127.0.0.1
+    single_address: ${_param:reclass_config_master}
+    cluster_vip_address: ${_param:reclass_config_master}
+    cluster_public_host: ${_param:reclass_config_master}
+    salt_master_host: 127.0.0.1
+    salt_master_base_environment: prd
+    salt_minion_ca_host: ${linux:network:fqdn}
+    jenkins_client_user: admin
+    jenkins_client_password: FIXME
+    jenkins_master_host: "${_param:reclass_config_master}"
+    jenkins_master_port: 18081
+    gerrit_admin_user: robot-github-worker
+    gerrit_admin_private_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEAumJ72W4Jmzu+Grg7U7//GTsNWCADuxIA5eYyTDvN3BhNF/DT
+      UxedCcTtMZOZnIAZvx/AzfGL6L/JKh/wXSGlShZwkGZqybqQvObAaKs+Gjjz/tIH
+      Za6a9n/NbsCDjPfoWEhfZm4F028VWV78hrden3vqiSwamQFj11Llp504WnR1UDVr
+      OXjzajJVW9h518pKH5KWNMCXVL98SUpOTAjIL7pQWODosgebOmJ8wOaWiz2BYnQt
+      6ynOe8meoR5sZZ0ntn6Ag8wGxiULvcLah4hN1OpiWkLceurxWv+aJSXmkvgRQC/G
+      ffKrFZUnU8vAs3mlQUGOm5+N1bsO2Beky/MppQIDAQABAoIBAE6J8WZN1/5xzkm0
+      GEvSO8yF9bmMxAWwMHCv78Hv8W8tTk8oS+RXrvTO5qRdbf1kfXTsDHK7thj9t+bo
+      ToDwDJaLniM7BQS8eQEguzNf9WtXVHmsRzGxwdrdP9PLi6N7U4zf8lNXSV0vEe/2
+      9rJN0rGhpdLnos2WqFuzstJOjdCPSXRGRhAj+CYT8b1Mxg4p9ryx/6DTmy5Ujoc3
+      Rd1rXb1qcb0tlDpfCpti24ByRIaJQuRGt7gtVE1t4Pj97ZGaPpRCtFn+lnKQQaYD
+      VcOpSUIPOOMeMpybBxM/YaeTgxLxpLgQZjIFRat+xuDPcN9+FzaZTwHJswzIRwJ6
+      xbErAAECgYEA8CibRDQlRl/4q/zMDRCebM8MhAu2Rax7FrcOXC+dzByONC1Gwwr0
+      p/u6hSzrJI7MNgn8NF3LCCvb+wZpXzN1PP4Y1+nTZZNonhRRJ+1cUNZ0PFug1441
+      iHAnKuE3loWft6rSf7SbsU1h9aKQWdqRuvinFHQ+MQUJzz4FoXJGIaUCgYEAxq3V
+      iGhPvibjHmJTSmostYDLhMkMIsUxJPFm1lTqlacenurw5rD7LEBPpyh4lMJ4U4an
+      xVqZGNOdtaK6CJo0OcnjDq0TxKLNviQ07Pmy1us/6QN2NjcJ6wKESrbUs/W38fdb
+      N1a7BTIPIWGGlZPyYjsZ+vDdwg67vnbA9GhaaAECgYAvIPjfWJBcECdfsPtmMPW2
+      Cqe9HgNGBwQcwA2sX5fK32u0p5H0YqkCci73RYpboT5H+IuqxyE52EmSKH7zNMj0
+      EDVV4cgfbd8g7oHCoRz1rDAhTCXzRzAQN1ooWwwqmMxwIbCvaQUItVPc/WrwhykE
+      FRnMtMcjnYaASf6W4TMMFQKBgQCdvB9el+pPflIsqkWUO+1ZAHMT7gYriMD2oo1R
+      tsMzoyXFZ6Nwk6wmOrzCangpKqgbMDn8jmwj8MYyEYp/D+ZMxwL0gObD47lSry4x
+      wiCBTu5DkdMFQfcm1K2xH6yJX5j1irupmLsMaeznRKV0FayG3oNG3npA+i+GDIQu
+      xraYAQKBgHiSYLoIKiMKYIepHpEIwLCQ8KPkSUfYOHv8YQDchdkwoT3iAV3jkA3L
+      BdiPchpO75nv3iNaKknV1svHzZ3NhZtJstRBEbJvlfGcADxJPta3Ce9jB2gn+IxC
+      AsH/ZlzpwOtSvwCp8iojgWlI6TrB56ZdCSuBCIOEM01zgAdQrGie
+      -----END RSA PRIVATE KEY-----
+  salt:
+    master:
+      reactor:
+        reclass/minion/classify:
+        - salt://reclass/reactor/node_register.sls
+  jenkins:
+    client:
+      user:
+        test01:
+          password: test
+          admin: true
+        test02:
+          password: test
+          admin: true
+        test03:
+          password: test
+          admin: true
+      master:
+        host: ${_param:jenkins_master_host}
+        port: ${_param:jenkins_master_port}
+        username: ${_param:jenkins_client_user}
+        password: ${_param:jenkins_client_password}

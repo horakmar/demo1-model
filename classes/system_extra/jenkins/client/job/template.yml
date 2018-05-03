@@ -1,0 +1,28 @@
+parameters:
+  jenkins:
+    client:
+      job_template:
+        # define job template that will be used to generate two jobs:
+        # test-pipeline-first-other and test-pipeline-second-another
+        # these job will use the Jenkins file of https://github.com/robot-github-worker/test-pipeline/blob/master/Jenkinsfile
+        # and FIRST_PARAM + SECOND_PARAM will be printed
+        jenkins-test-template:
+          name: test-pipeline-{{name}}-{{other}}
+          jobs:
+            - name: first
+              other: other
+            - name: second
+              other: another
+          template:
+            type: workflow-scm
+            scm:
+              type: git
+              url: git@github.com:robot-github-worker/test-pipeline.git
+              credentials: "gerrit"
+            param:
+              FIRST_PARAM:
+                type: string
+                default: "{{name}}" 
+              SECOND_PARAM:
+                type: string
+                default: "{{other}}" 

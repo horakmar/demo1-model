@@ -1,0 +1,26 @@
+parameters:
+  jenkins:
+    client:
+      job:
+        # job with inlined groovy script
+        test_workflow_jenkins_simple:
+          type: workflow
+          display_name: Test jenkins simple workflow
+          script:
+            content: |
+              node {
+                 stage 'Stage 1'
+                 echo 'Hello World 1'
+                 stage 'Stage 2'
+                 echo 'Hello World 2'
+              }
+      user:
+        test01:
+          password: test
+          admin: true
+        test02:
+          password: test
+          admin: true
+        test03:
+          password: test
+          admin: true
