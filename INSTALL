@@ -1,0 +1,61 @@
+1. Clone model and bootstrap script:
+
+git clone https://github.com/salt-formulas/salt-formulas-scripts /srv/salt/scripts
+git clone git@github.com:chnyda/demo-model.git /srv/salt/reclass
+cd /srv/salt/reclass && git submodule init && git submodule update --remote
+
+to clone the model you need to have this key (/root/.ssh/id_rsa):
+
+-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAumJ72W4Jmzu+Grg7U7//GTsNWCADuxIA5eYyTDvN3BhNF/DT
+UxedCcTtMZOZnIAZvx/AzfGL6L/JKh/wXSGlShZwkGZqybqQvObAaKs+Gjjz/tIH
+Za6a9n/NbsCDjPfoWEhfZm4F028VWV78hrden3vqiSwamQFj11Llp504WnR1UDVr
+OXjzajJVW9h518pKH5KWNMCXVL98SUpOTAjIL7pQWODosgebOmJ8wOaWiz2BYnQt
+6ynOe8meoR5sZZ0ntn6Ag8wGxiULvcLah4hN1OpiWkLceurxWv+aJSXmkvgRQC/G
+ffKrFZUnU8vAs3mlQUGOm5+N1bsO2Beky/MppQIDAQABAoIBAE6J8WZN1/5xzkm0
+GEvSO8yF9bmMxAWwMHCv78Hv8W8tTk8oS+RXrvTO5qRdbf1kfXTsDHK7thj9t+bo
+ToDwDJaLniM7BQS8eQEguzNf9WtXVHmsRzGxwdrdP9PLi6N7U4zf8lNXSV0vEe/2
+9rJN0rGhpdLnos2WqFuzstJOjdCPSXRGRhAj+CYT8b1Mxg4p9ryx/6DTmy5Ujoc3
+Rd1rXb1qcb0tlDpfCpti24ByRIaJQuRGt7gtVE1t4Pj97ZGaPpRCtFn+lnKQQaYD
+VcOpSUIPOOMeMpybBxM/YaeTgxLxpLgQZjIFRat+xuDPcN9+FzaZTwHJswzIRwJ6
+xbErAAECgYEA8CibRDQlRl/4q/zMDRCebM8MhAu2Rax7FrcOXC+dzByONC1Gwwr0
+p/u6hSzrJI7MNgn8NF3LCCvb+wZpXzN1PP4Y1+nTZZNonhRRJ+1cUNZ0PFug1441
+iHAnKuE3loWft6rSf7SbsU1h9aKQWdqRuvinFHQ+MQUJzz4FoXJGIaUCgYEAxq3V
+iGhPvibjHmJTSmostYDLhMkMIsUxJPFm1lTqlacenurw5rD7LEBPpyh4lMJ4U4an
+xVqZGNOdtaK6CJo0OcnjDq0TxKLNviQ07Pmy1us/6QN2NjcJ6wKESrbUs/W38fdb
+N1a7BTIPIWGGlZPyYjsZ+vDdwg67vnbA9GhaaAECgYAvIPjfWJBcECdfsPtmMPW2
+Cqe9HgNGBwQcwA2sX5fK32u0p5H0YqkCci73RYpboT5H+IuqxyE52EmSKH7zNMj0
+EDVV4cgfbd8g7oHCoRz1rDAhTCXzRzAQN1ooWwwqmMxwIbCvaQUItVPc/WrwhykE
+FRnMtMcjnYaASf6W4TMMFQKBgQCdvB9el+pPflIsqkWUO+1ZAHMT7gYriMD2oo1R
+tsMzoyXFZ6Nwk6wmOrzCangpKqgbMDn8jmwj8MYyEYp/D+ZMxwL0gObD47lSry4x
+wiCBTu5DkdMFQfcm1K2xH6yJX5j1irupmLsMaeznRKV0FayG3oNG3npA+i+GDIQu
+xraYAQKBgHiSYLoIKiMKYIepHpEIwLCQ8KPkSUfYOHv8YQDchdkwoT3iAV3jkA3L
+BdiPchpO75nv3iNaKknV1svHzZ3NhZtJstRBEbJvlfGcADxJPta3Ce9jB2gn+IxC
+AsH/ZlzpwOtSvwCp8iojgWlI6TrB56ZdCSuBCIOEM01zgAdQrGie
+-----END RSA PRIVATE KEY-----
+
+2. Run the install script:
+
+/srv/salt/reclass/scripts/install.sh
+
+3. Execute basic salt states
+
+salt-call state.sls salt.master
+salt-call state.sls salt.minion
+salt-call state.sls salt.minion
+
+salt-call state.sls linux
+salt-call state.sls docker.client # will install docker and start a container with Jenkins
+# You can now connect to jenkins at port 18081 with your browser and start it.
+# you will need to connect to see the log of the container to get the admin password
+docker logs $(docker ps | grep jenkins | cut -d ' ' -f 1)
+# now you can find the secret first admin password and connect to Jenkins
+# create an user 'admin' and set the password you want
+
+# if you want to continue and configure Jenkins with salt:
+# Add jenkins password in /srv/salt/reclass/classes/cluster/demo/config.yml in jenkins_client_password
+salt-call state.sls salt.minion
+
+# Execute Jenkins client state
+salt-call state.sls jenkins.client
+# it will configure Jenkins with Salt: jobs will be created, credentials will be added, etc...

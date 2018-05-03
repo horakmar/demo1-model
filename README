@@ -1,0 +1,33 @@
+This model is very simple and contains the minimal configuration required to have Jenkins run in a container.
+
+The principle is simple : pick and take what you want to use from the system level.
+The system level classes define roles for nodes.
+
+For instance, in our simple demo cluster, we want to have Jenkins in a container, therefore we need to:
+1) Include docker apt repository, it is done by adding:
+- system.linux.system.repo.docker
+2) Include basic definitions for Docker, therefore, we add the following classes:
+- system.docker.host
+- system.docker
+- system.docker.client.compose
+
+3) We want Jenkins to run in a container with Docker compose.
+- system_extra.docker.client.compose.service.jenkins
+The system_extra part could have been merged in the system part but in this case, we wanted to add a role specific to this cluster without having it merged in https://github.com/Mirantis/reclass-system-salt-model, that we are using in our case for the system level.
+
+For all the previous steps, the roles from the system level are included in the cluster level. Some specific parameters which are used in the system level have to be defined in the cluster level : for instance IP addresses, password, SSH keys, etc...
+
+
+In /srv/salt/reclass/classes:
+There is the system level in the system directory.
+The cluster level is in cluster (in our case the cluster has the name demo)
+An extension of the system level is in system_extra
+
+How to bootstrap salt?
+There is a script to bootstrap and install salt (https://github.com/salt-formulas/salt-formulas-scripts/blob/master/bootstrap.sh). It is necessary to set some environment variables before using the bootstrap script. You can see how it is done by looking at the install script (scripts/install.sh).
+The nodes directory will be created and will contain the yaml files of the different nodes of the cluster. These files are generated dynamically.
+In our case the configuration node is generated directly in the bootstrap script : https://github.com/salt-formulas/salt-formulas-scripts/blob/master/bootstrap.sh#L332 and it will include  cluster.${CLUSTER_NAME}.infra.config . It means that the file cluster/${CLUSTER_NAME}/infra/config.yml has to contain the files required for the cluster and for this node.
+
+Other nodes are also generated dynamically. In the system level, there are definitions for some specific cases : https://github.com/Mirantis/reclass-system-salt-model/blob/master/reclass/storage/system/openstack_compute_multi.yml contains the necessary definitions to generate two compute nodes. Therefore if you want to have two compute nodes in the cluster, you can include this class in the cluster level. You can define nodes using the same principle.
+
+More documentation can be found here: http://salt-formulas.readthedocs.io/en/latest/intro/index.html

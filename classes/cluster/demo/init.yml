@@ -1,16 +1,8 @@
 classes:
-- system.linux.network.dynamic_hosts
-- system.linux.system.repo.mcp.extra
-- system.linux.system.single
-- system.rsyslog.client.single
-- system.openssh.server.team.lab
-- system.openssh.server.team.tcpcloud
 - cluster.demo.infra
 parameters:
   _param:
     cluster_domain: demo.local
     cluster_name: demo
-    # infra service addresses
     infra_config_hostname: cfg01
     infra_config_address: 127.0.0.1
-    # openstack service addresses

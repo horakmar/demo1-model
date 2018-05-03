@@ -2,7 +2,7 @@ classes:
   - system.docker.client.compose
 parameters:
   _param:
-    docker_image_jenkins: mirantis/jenkins:2.100
+    docker_image_jenkins: breton/jenkins
     jenkins_master_extra_opts: ""
     jenkins_master_executors_num: 4
     jenkins_master_max_concurent_requests: 40

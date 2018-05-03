@@ -2,45 +2,42 @@ classes:
 - service.git.client
 - system.linux.system.single
 - system.linux.system.repo.mcp.salt
-# Add docker repository
+# Add docker apt repisitory
 - system.linux.system.repo.docker
 - system.salt.master.api
 - system.salt.master.pkg
 - system.openssh.client.lab
 - system.reclass.storage.salt
 - system.salt.minion.ca.salt_master
-#- system.sphinx.server.doc.reclass
 - system.docker.host
 - system.docker
 - system.docker.client.compose
 - system_extra.docker.client.compose.service.jenkins
-#
+# Jenkins configuration
 - system.jenkins.master.config
 - service.jenkins.support
 - service.jenkins.client
 - system.jenkins.client.approved_scripts
 - system.jenkins.client.credential.gerrit
+# Jenkins job definition
 - system_extra.jenkins.client.job.template
 - system_extra.jenkins.client.job.inline
-#
 - cluster.demo
 parameters:
   _param:
-    reclass_data_repository: https://github.com/chnyda/ovn3
+    reclass_data_repository: https://github.com/chnyda/demo-model
     reclass_data_revision: master
-    salt_master_environment_repository: "https://github.com/tcpcloud"
-    salt_master_environment_revision: master
     salt_api_password_hash: "$6$sGnRlxGf$al5jMCetLP.vfI/fTl3Z0N7Za1aeiexL487jAtyRABVfT3NlwZxQGVhO7S1N8OwS/34VHYwZQA8lkXwKMN/GS1"
-    reclass_config_master: 127.0.0.1
+    reclass_config_master: ${_param:infra_config_address}
     single_address: ${_param:reclass_config_master}
     cluster_vip_address: ${_param:reclass_config_master}
     cluster_public_host: ${_param:reclass_config_master}
-    salt_master_host: 127.0.0.1
+    salt_master_host: ${_param:reclass_config_master}
     salt_master_base_environment: prd
     salt_minion_ca_host: ${linux:network:fqdn}
     jenkins_client_user: admin
     jenkins_client_password: FIXME
-    jenkins_master_host: "${_param:reclass_config_master}"
+    jenkins_master_host: ${_param:reclass_config_master}
     jenkins_master_port: 18081
     gerrit_admin_user: robot-github-worker
     gerrit_admin_private_key: |
@@ -71,11 +68,6 @@ parameters:
       BdiPchpO75nv3iNaKknV1svHzZ3NhZtJstRBEbJvlfGcADxJPta3Ce9jB2gn+IxC
       AsH/ZlzpwOtSvwCp8iojgWlI6TrB56ZdCSuBCIOEM01zgAdQrGie
       -----END RSA PRIVATE KEY-----
-  salt:
-    master:
-      reactor:
-        reclass/minion/classify:
-        - salt://reclass/reactor/node_register.sls
   jenkins:
     client:
       user:
