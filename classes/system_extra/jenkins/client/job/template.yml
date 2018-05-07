@@ -17,7 +17,7 @@ parameters:
             type: workflow-scm
             scm:
               type: git
-              url: git@github.com:robot-github-worker/test-pipeline.git
+              url: https://github.com/robot-github-worker/test-pipeline.git
               credentials: "gerrit"
             param:
               FIRST_PARAM:

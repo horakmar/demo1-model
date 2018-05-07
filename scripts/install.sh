@@ -13,7 +13,7 @@ export EXTRA_FORMULAS="linux salt reclass maas memcached openssh ntp  sphinx \
 export MASTER_HOSTNAME=${HOSTNAME}.${DOMAIN}
 export MINION_ID=$HOSTNAME
 export RECLASS_IGNORE_CLASS_NOTFOUND=False
-export RECLASS_ADDRESS="git@github.com:chnyda/demo-model.git"
+export RECLASS_ADDRESS="https://github.com/horakmar/demo-model.git"
 export SALT_MASTER_IP=127.0.0.1
 
 source /srv/salt/scripts/bootstrap.sh
