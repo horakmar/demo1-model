@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo '127.0.1.1 cfg01' >> /etc/hosts
-export HOSTNAME=cfg01 # might need to be changed
-export DOMAIN="dev-test.local" # might need to be changed
+echo '127.0.1.1 cfg01 ctl01' >> /etc/hosts
+export HOSTNAME=ctl01 # might need to be changed
+export DOMAIN="cezdata.corp" # might need to be changed
 export CLUSTER_NAME=demo
 
 export FORMULAS_SOURCE="pkg"
@@ -13,8 +13,8 @@ export EXTRA_FORMULAS="linux salt reclass maas memcached openssh ntp  sphinx \
 export MASTER_HOSTNAME=${HOSTNAME}.${DOMAIN}
 export MINION_ID=$HOSTNAME
 export RECLASS_IGNORE_CLASS_NOTFOUND=False
-export RECLASS_ADDRESS="git@github.com:chnyda/demo-model.git"
-export SALT_MASTER_IP=127.0.0.1
+# export RECLASS_ADDRESS="git@github.com:chnyda/demo-model.git"
+export SALT_MASTER_IP=172.28.112.110
 
 source /srv/salt/scripts/bootstrap.sh
 source_local_envs
