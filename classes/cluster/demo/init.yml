@@ -2,7 +2,7 @@ classes:
 - cluster.demo.infra
 parameters:
   _param:
-    cluster_domain: cezdata.corp
+    cluster_domain: demo.local
     cluster_name: demo
-    infra_config_hostname: ctl01
-    infra_config_address: 172.28.112.110
+    infra_config_hostname: cfg01
+    infra_config_address: 127.0.0.1
