@@ -2,7 +2,7 @@
 
 echo '127.0.1.1 cfg01' >> /etc/hosts
 export HOSTNAME=cfg01 # might need to be changed
-export DOMAIN="dev-test.local" # might need to be changed
+export DOMAIN="demo.local" # might need to be changed
 export CLUSTER_NAME=demo
 
 export FORMULAS_SOURCE="pkg"
