@@ -1,9 +1,9 @@
 classes:
 - service.git.client
 - system.linux.system.single
-- system.linux.system.repo.mcp.salt
+#- system.linux.system.repo.mcp.salt
 # Add docker apt repisitory
-- system.linux.system.repo.docker
+#- system.linux.system.repo.docker
 - system.salt.master.api
 - system.salt.master.pkg
 - system.openssh.client.lab
@@ -13,6 +13,7 @@ classes:
 - system.docker
 - system.docker.client.compose
 - system_extra.docker.client.compose.service.jenkins
+- system_extra.docker.client.compose.service.gerrit
 # Jenkins configuration
 - system.jenkins.master.config
 - service.jenkins.support
@@ -36,7 +37,7 @@ parameters:
     salt_master_base_environment: prd
     salt_minion_ca_host: ${linux:network:fqdn}
     jenkins_client_user: admin
-    jenkins_client_password: FIXME
+    jenkins_client_password: admin
     jenkins_master_host: ${_param:reclass_config_master}
     jenkins_master_port: 18081
     gerrit_admin_user: robot-github-worker
@@ -85,3 +86,18 @@ parameters:
         port: ${_param:jenkins_master_port}
         username: ${_param:jenkins_client_user}
         password: ${_param:jenkins_client_password}
+  linux:
+    system:
+      proxy:
+        pkg:
+          enabled: true
+          http: ${_param:infra_config_proxy}
+          https: ${_param:infra_config_proxy}
+      env:
+        http_proxy: ${_param:infra_config_proxy}
+        https_proxy: ${_param:infra_config_proxy}
+        no_proxy:
+        - .cezdata.corp
+        - .demo.local
+        - 10.0.0.0/8
+        - 172.24.0.0/13

@@ -6,3 +6,4 @@ parameters:
     cluster_name: demo
     infra_config_hostname: cfg01
     infra_config_address: 127.0.0.1
+    infra_config_proxy: http://http-proxy.cezdata.corp:8080
