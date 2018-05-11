@@ -13,7 +13,7 @@ classes:
 - system.docker
 - system.docker.client.compose
 - system_extra.docker.client.compose.service.jenkins
-- system_extra.docker.client.compose.service.gerrit
+#- system_extra.docker.client.compose.service.gerrit
 # Jenkins configuration
 - system.jenkins.master.config
 - service.jenkins.support
@@ -26,6 +26,9 @@ classes:
 - cluster.demo
 parameters:
   _param:
+    http_proxy: http://http-proxy.cezdata.corp:8080
+    https_proxy: ${_param:http_proxy}
+    no_proxy: .cezdata.corp,.demo.local,10.0.0.0/8,172.24.0.0/13
     reclass_data_repository: https://github.com/horakmar/demo-model
     reclass_data_revision: master
     salt_api_password_hash: "$6$sGnRlxGf$al5jMCetLP.vfI/fTl3Z0N7Za1aeiexL487jAtyRABVfT3NlwZxQGVhO7S1N8OwS/34VHYwZQA8lkXwKMN/GS1"
@@ -91,11 +94,11 @@ parameters:
       proxy:
         pkg:
           enabled: true
-          http: ${_param:infra_config_proxy}
-          https: ${_param:infra_config_proxy}
+          http: ${_param:http_proxy}
+          https: ${_param:https_proxy}
       env:
-        http_proxy: ${_param:infra_config_proxy}
-        https_proxy: ${_param:infra_config_proxy}
+        http_proxy: ${_param:http_proxy}
+        https_proxy: ${_param:https_proxy}
         no_proxy:
         - .cezdata.corp
         - .demo.local
