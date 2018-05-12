@@ -1,9 +1,9 @@
 classes:
 - service.git.client
 - system.linux.system.single
-#- system.linux.system.repo.mcp.salt
+- system.linux.system.repo.mcp.salt
 # Add docker apt repisitory
-#- system.linux.system.repo.docker
+- system.linux.system.repo.docker
 - system.salt.master.api
 - system.salt.master.pkg
 - system.openssh.client.lab
