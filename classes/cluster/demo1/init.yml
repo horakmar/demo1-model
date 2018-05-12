@@ -1,9 +1,8 @@
 classes:
-- cluster.demo.infra
+- cluster.demo1.infra
 parameters:
   _param:
     cluster_domain: demo.local
-    cluster_name: demo
+    cluster_name: demo1
     infra_config_hostname: cfg01
     infra_config_address: 127.0.0.1
-    infra_config_proxy: http://http-proxy.cezdata.corp:8080
